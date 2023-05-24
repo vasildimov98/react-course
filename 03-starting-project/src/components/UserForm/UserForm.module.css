@@ -1,0 +1,16 @@
+.user-form__label-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.user-form__label-container label {
+  font-weight: bold;
+}
+
+.user-form__label-container input {
+  width: 100%;
+  padding: 10px;
+}
