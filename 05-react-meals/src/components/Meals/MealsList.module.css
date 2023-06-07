@@ -1,0 +1,10 @@
+.meals {
+  margin-top: 40px;
+  background-color: #fff;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
