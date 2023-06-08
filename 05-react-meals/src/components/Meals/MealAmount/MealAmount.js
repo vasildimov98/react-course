@@ -1,3 +1,4 @@
+import Input from "../../UI/Input/Input";
 import styles from "./MealAmount.module.css";
 
 const MealAmount = ({ onAmountChange }) => {
@@ -6,13 +7,17 @@ const MealAmount = ({ onAmountChange }) => {
   };
   return (
     <div className={styles.container}>
-      <span>Amount</span>
-      <input
+      <Input
         onChange={onChangeHandler}
-        type="number"
-        min="1"
-        max="5"
-        defaultValue="1"
+        label={"Amount"}
+        input={{
+          id: "amount",
+          type: "number",
+          min: "1",
+          max: "5",
+          step: "1",
+          defaultValue: "1",
+        }}
       />
     </div>
   );
