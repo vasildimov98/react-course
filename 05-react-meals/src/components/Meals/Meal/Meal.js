@@ -4,13 +4,13 @@ import MealAmount from "../MealAmount/MealAmount";
 import styles from "./Meal.module.css";
 import { CartContext } from "../../../context/cart-context";
 
-const Meal = ({ name, description, price }) => {
+const Meal = ({ name, description, price, id }) => {
   const [amount, setAmount] = useState(1);
   const cartContext = useContext(CartContext);
   const priceString = `$${price.toFixed(2)}`;
 
   const onClickHandler = () => {
-    cartContext.addItem({ name, description, price, amount });
+    cartContext.addItem({ name, description, price, amount, id });
   };
 
   const onAmountChange = (newAmount) => {
@@ -25,7 +25,7 @@ const Meal = ({ name, description, price }) => {
         <p className={styles.price}>{priceString}</p>
       </li>
       <div className={styles["adding-container"]}>
-        <MealAmount onAmountChange={onAmountChange} amount={amount} />
+        <MealAmount onAmountChange={onAmountChange} />
         <Button onClick={onClickHandler}>+ Add</Button>
       </div>
     </div>

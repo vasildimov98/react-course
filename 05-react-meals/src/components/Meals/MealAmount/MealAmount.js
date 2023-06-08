@@ -1,6 +1,6 @@
 import styles from "./MealAmount.module.css";
 
-const MealAmount = ({ onAmountChange, amount }) => {
+const MealAmount = ({ onAmountChange }) => {
   const onChangeHandler = (event) => {
     onAmountChange(event.target.value);
   };
@@ -9,7 +9,6 @@ const MealAmount = ({ onAmountChange, amount }) => {
       <span>Amount</span>
       <input
         onChange={onChangeHandler}
-        value={amount}
         type="number"
         min="1"
         max="5"

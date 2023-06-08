@@ -2,13 +2,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 import Button from "../../UI/Button/Button";
+import { useContext } from "react";
+import { CartContext } from "../../../context/cart-context";
 
 const HeaderCartButton = () => {
+  const context = useContext(CartContext);
+
   return (
-    <Button>
+    <Button onClick={context.onOpenCart}>
       <FontAwesomeIcon icon={faCartShopping} />
       <p>Your Cart</p>
-      <span>2</span>
+      <span>{context.items.length}</span>
     </Button>
   );
 };
