@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 
 export const CartContext = createContext({
   items: [],
+  amount: 0,
   totalAmount: 0,
   isCartOpen: false,
   addItem: (item) => {},
@@ -37,7 +38,7 @@ export const CartContextProvider = ({ children }) => {
       if (existingItem) {
         updatedItems = prevItems.map((prevItem) => {
           if (prevItem.id === item.id) {
-            return { ...prevItem, amount: prevItem.amount + 1 };
+            return { ...prevItem, amount: +prevItem.amount + +item.amount };
           }
           return prevItem;
         });
@@ -90,6 +91,7 @@ export const CartContextProvider = ({ children }) => {
 
   const contextValue = {
     items,
+    amount: items.reduce((acc, item) => acc + item.amount, 0),
     totalAmount: items.reduce((acc, item) => acc + item.price * item.amount, 0),
     isCartOpen: openCart,
     addItem: addItemHandler,

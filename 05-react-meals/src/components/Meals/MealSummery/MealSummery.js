@@ -1,7 +1,7 @@
-import Card from "../UI/Card/Card";
-import classes from "./Modal.module.css";
+import Card from "../../UI/Card/Card";
+import classes from "./MealSummery.module.css";
 
-const Modal = () => {
+const MealSummery = () => {
   return (
     <Card className={classes.modal}>
       <h1>Delicious Food, Delivered to You</h1>
@@ -17,4 +17,4 @@ const Modal = () => {
   );
 };
 
-export default Modal;
+export default MealSummery;

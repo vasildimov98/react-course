@@ -12,7 +12,7 @@ const HeaderCartButton = () => {
     <Button onClick={context.onOpenCart}>
       <FontAwesomeIcon icon={faCartShopping} />
       <p>Your Cart</p>
-      <span>{context.items.length}</span>
+      <span>{context.amount}</span>
     </Button>
   );
 };

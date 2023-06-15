@@ -10,7 +10,10 @@ const Meal = ({ name, description, price, id }) => {
   const priceString = `$${price.toFixed(2)}`;
 
   const onClickHandler = () => {
-    cartContext.addItem({ name, description, price, amount, id });
+    console.log(amount);
+    const item = { name, description, price, amount, id };
+    console.log(item);
+    cartContext.addItem(item);
   };
 
   const onAmountChange = (newAmount) => {
@@ -25,8 +28,10 @@ const Meal = ({ name, description, price, id }) => {
         <p className={styles.price}>{priceString}</p>
       </li>
       <div className={styles["adding-container"]}>
-        <MealAmount onAmountChange={onAmountChange} />
-        <Button onClick={onClickHandler}>+ Add</Button>
+        <MealAmount onAmountChange={onAmountChange} id={id} />
+        <Button className={styles.button} onClick={onClickHandler}>
+          + Add
+        </Button>
       </div>
     </div>
   );

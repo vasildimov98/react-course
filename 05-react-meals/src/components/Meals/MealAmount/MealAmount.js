@@ -1,7 +1,7 @@
 import Input from "../../UI/Input/Input";
 import styles from "./MealAmount.module.css";
 
-const MealAmount = ({ onAmountChange }) => {
+const MealAmount = ({ onAmountChange, id }) => {
   const onChangeHandler = (event) => {
     onAmountChange(event.target.value);
   };
@@ -11,7 +11,7 @@ const MealAmount = ({ onAmountChange }) => {
         onChange={onChangeHandler}
         label={"Amount"}
         input={{
-          id: "amount",
+          id: "amount_" + id,
           type: "number",
           min: "1",
           max: "5",
