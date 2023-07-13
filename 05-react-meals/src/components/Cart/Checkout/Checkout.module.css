@@ -1,0 +1,49 @@
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #fff;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+label {
+  font-weight: bold;
+}
+
+.checkout-input {
+  flex: 0 0 auto;
+  width: 500px;
+  padding: 10px 20px;
+}
+
+.checkout-action {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.checkout-action button {
+  font-size: 15px;
+  padding: 15px 30px;
+}
+
+.checkout-action button:first-child {
+  background-color: #fff;
+  color: #4d1601;
+  border: 1px solid #4d1601;
+}
+
+.checkout-action button:first-child:hover {
+  background-color: #4d1601;
+  color: #fff;
+}
+
+.invalid-message {
+  color: red;
+  font-size: 12px;
+}

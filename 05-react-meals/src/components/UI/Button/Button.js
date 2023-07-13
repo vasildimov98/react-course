@@ -3,6 +3,8 @@ import styles from "./Button.module.css";
 const Button = ({ children, className, type, onClick, disabled }) => {
   const classes = `${styles.button} ${className || ""}`;
   const buttonType = type || "button";
+
+  console.log("Button.js: ", disabled);
   return (
     <button
       className={classes}

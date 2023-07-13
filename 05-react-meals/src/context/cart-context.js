@@ -5,16 +5,20 @@ export const CartContext = createContext({
   amount: 0,
   totalAmount: 0,
   isCartOpen: false,
+  isCheckingOut: false,
   addItem: (item) => {},
   removeItem: (id) => {},
   onOpenCart: () => {},
   onCloseCart: () => {},
+  onCheckingOut: () => {},
   clearCart: () => {},
+  onCloseCheckout: () => {},
 });
 
 export const CartContextProvider = ({ children }) => {
   const [items, setItems] = useState([]);
   const [openCart, setOpenCart] = useState(false);
+  const [openCheckout, setOpenCheckout] = useState(false);
 
   useEffect(() => {
     const isCartOpen = localStorage.getItem("isCartOpen");
@@ -79,14 +83,22 @@ export const CartContextProvider = ({ children }) => {
     localStorage.setItem("isCartOpen", true);
   };
 
+  const clearCartHandler = () => {
+    setItems([]);
+    localStorage.removeItem("items");
+  };
+
+  const onCheckingOutHandler = () => {
+    setOpenCheckout(true);
+  };
+
   const closeCartHandler = () => {
     setOpenCart(false);
     localStorage.removeItem("isCartOpen");
   };
 
-  const clearCartHandler = () => {
-    setItems([]);
-    localStorage.removeItem("items");
+  const closeCheckoutHandler = () => {
+    setOpenCheckout(false);
   };
 
   const contextValue = {
@@ -94,11 +106,14 @@ export const CartContextProvider = ({ children }) => {
     amount: items.reduce((acc, item) => acc + item.amount, 0),
     totalAmount: items.reduce((acc, item) => acc + item.price * item.amount, 0),
     isCartOpen: openCart,
+    isCheckingOut: openCheckout,
     addItem: addItemHandler,
     removeItem: removeItemHandler,
     onOpenCart: openCartHandler,
     onCloseCart: closeCartHandler,
     clearCart: clearCartHandler,
+    onCheckingOut: onCheckingOutHandler,
+    onCloseCheckout: closeCheckoutHandler,
   };
   return (
     <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
