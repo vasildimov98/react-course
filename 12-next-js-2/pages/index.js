@@ -1,30 +1,43 @@
 import MeetupList from "../components/meetups/MeetupList";
-
-const DUMMY_MEETUPS = [
-  {
-    id: "m1",
-    title: "A First Meetup",
-    image:
-      "https://media.istockphoto.com/id/539115110/photo/colosseum-in-rome-and-morning-sun-italy.jpg?s=2048x2048&w=is&k=20&c=98qMLmYY4cYbb0jGZcyFntjUJpN8UfixLcisXpU7bDk=",
-    address: "Some address 5, 12345 Some City",
-  },
-  {
-    id: "m2",
-    title: "A Second Meetup",
-    image:
-      "https://media.istockphoto.com/id/539115110/photo/colosseum-in-rome-and-morning-sun-italy.jpg?s=2048x2048&w=is&k=20&c=98qMLmYY4cYbb0jGZcyFntjUJpN8UfixLcisXpU7bDk=",
-    address: "Some address 10, 12345 Some City",
-  },
-];
+import {
+  closeConnection,
+  connectDatabase,
+  getCollections,
+} from "./api/utils/mongodb";
+import Head from "next/head";
 
 const HomePage = ({ meetups }) => {
-  return <MeetupList meetups={meetups} />;
+  return (
+    <>
+      <Head>
+        <title>React Meetups</title>
+        <meta
+          name="description"
+          content="Browse a huge list of highly active React meetups!"
+        />
+      </Head>
+      <MeetupList meetups={meetups} />;
+    </>
+  );
 };
 
-export function getStaticProps() {
+export async function getStaticProps() {
+  await connectDatabase();
+
+  const meetupsCollection = getCollections("meetups");
+
+  const meetups = await meetupsCollection.find().toArray();
+
+  closeConnection();
+
   return {
     props: {
-      meetups: DUMMY_MEETUPS,
+      meetups: meetups.map((meetup) => ({
+        title: meetup.title,
+        address: meetup.address,
+        image: meetup.image,
+        id: meetup._id.toString(),
+      })),
     },
   };
 }

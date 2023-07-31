@@ -1,47 +1,68 @@
+import { ObjectId } from "mongodb";
 import MeetupDetails from "../../components/meetups/MeetupDetails";
+import {
+  connectDatabase,
+  getCollections,
+  closeConnection,
+} from "../api/utils/mongodb";
+import Head from "next/head";
 
 const MeetupDetailsPage = ({ meetupData }) => {
   return (
-    <MeetupDetails
-      title={meetupData.title}
-      image={meetupData.image}
-      address={meetupData.address}
-      description={meetupData.description}
-    />
+    <>
+      <Head>
+        <title>{meetupData.title}</title>
+        <meta name="description" content={meetupData.description} />
+      </Head>
+      <MeetupDetails
+        title={meetupData.title}
+        image={meetupData.image}
+        address={meetupData.address}
+        description={meetupData.description}
+      />
+    </>
   );
 };
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  await connectDatabase();
+
+  const meetups = getCollections("meetups");
+
+  const meetupsId = await meetups.find({}, { _id: 1 }).toArray();
+
+  closeConnection();
+
   return {
     fallback: false,
-    paths: [
-      {
-        params: {
-          meetupid: "m1",
-        },
+    paths: meetupsId.map((meetup) => ({
+      params: {
+        meetupid: meetup._id.toString(),
       },
-      {
-        params: {
-          meetupid: "m2",
-        },
-      },
-    ],
+    })),
   };
 }
 
-export function getStaticProps({ params }) {
+export async function getStaticProps({ params }) {
   const meetupId = params.meetupid;
+
+  await connectDatabase();
+
+  const meetupsCollection = getCollections("meetups");
+
+  const meetup = await meetupsCollection.findOne({
+    _id: new ObjectId(meetupId),
+  });
 
   console.log(meetupId);
   return {
     props: {
       meetupData: {
-        image:
-          "https://media.istockphoto.com/id/539115110/photo/colosseum-in-rome-and-morning-sun-italy.jpg?s=2048x2048&w=is&k=20&c=98qMLmYY4cYbb0jGZcyFntjUJpN8UfixLcisXpU7bDk=",
-        id: meetupId,
-        title: "A First Meetup",
-        address: "Some address 5, 12345 Some City",
-        description: "This is a first meetup!",
+        title: meetup.title,
+        image: meetup.image,
+        address: meetup.address,
+        description: meetup.description,
+        id: meetup._id.toString(),
       },
     },
   };
